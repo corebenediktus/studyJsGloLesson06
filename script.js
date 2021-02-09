@@ -1,45 +1,44 @@
 'use strict'
 
-
-
 const game = function() {
-    let userNumber = prompt('Угадай случайное число от 1 до 100');                
     
-    let isNumber = function() {         
-        return !isNaN(parseFloat(userNumber)) && isFinite(userNumber);
-    }
-    isNumber();
-    console.log(isNumber());
+    function getRandomNum(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }      
+    const secretNumber = getRandomNum(1, 100);   
 
 
     const start = function () {
-
-        let secretNumber = function() {
-            return Math.ceil(Math.random()*100);        
+        let userNumber = prompt('Угадай случайное число от 1 до 100');
+        let correctUserNumber = Number(userNumber)                      
+    
+        const isNumber = function(n) {         
+            return !isNaN(parseFloat(n)) && isFinite(n);
         }
-        secretNumber();
-        
 
         if (userNumber==null) {
             alert('игра окончена, го еще');
             game();
         } else {
-            if (isNumber() != false) {
-                let correctUserNumber = Number(userNumber);      
+            if (isNumber(correctUserNumber)) {                     
                 
                 if (correctUserNumber==secretNumber) {
-                    console.log('norm');
-                } else {
-                    console.log('ne norm');
-                                     
-                    
-                }
-                
+                    alert('Угадал, го еще!');
+                    game();
+
+                } else if (correctUserNumber>secretNumber) {
+                    alert('Загадонное число меньше');
+                    start();
+
+                } else if (correctUserNumber<secretNumber) {
+                    alert('Загадонное число больше');
+                    start();
+                }                
             } else {
                 alert('введи целое число!');
+                start();
             }
         }
-
     }
     start();
 }
